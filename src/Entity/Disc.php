@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\DiscRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 #[ORM\Entity(repositoryClass: DiscRepository::class)]
 class Disc
@@ -14,21 +16,30 @@ class Disc
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
     #[ORM\Column]
+    #[Assert\Range(
+        min: 1895,
+        max: 2025,
+        notInRangeMessage: 'L\'année doit être entre {{ min }} et {{ max }}.',
+    )]
     private ?int $year = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $label = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
     private ?string $genre = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank()]
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'discs')]

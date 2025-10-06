@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Velvet Record{% endblock %} 
 {% block body %}
     <div class="container">
         <div class="row my-3">
@@ -9,7 +9,7 @@
         <div class="row">
             {% for disque in disques %}
                 <div class="col-6">
-                    <div class="card mb-3">
+                    <div class="card border-0 mb-3">
                         <div class="row g-0 h-100">
                             <div class="col-5">
                                 <img src="{{ asset('uploads/jaquettes/' ~ disque.picture) }}" 
@@ -24,7 +24,7 @@
                                     <p class="card-text">Label : <small class="text-body-secondary">{{ disque.label }}</small></p>
                                     <p class="card-text">Year : <small class="text-body-secondary">{{ disque.year }}</small></p>
                                     <p class="card-text">Genre : <small class="text-body-secondary">{{ disque.genre }}</small></p>
-                                    <a href="#" class="btn btn-primary">Détails</a>
+                                    <a href="{{ path('app_details', {'id' : disque.id} ) }}" class="btn btn-primary">Détails</a>
                                 </div>
                             </div>
                         </div> 
