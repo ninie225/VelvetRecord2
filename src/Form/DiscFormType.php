@@ -13,15 +13,19 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\NotNull;
 
-class EditFormType extends AbstractType
+class DiscFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre',
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ titre.")
+                ]
             ])
             ->add('picture', FileType::class, [
                 'label' => 'Photo',
@@ -42,22 +46,37 @@ class EditFormType extends AbstractType
             ])
             ->add('year', IntegerType::class, [
                 'label' => 'Année',
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ année.")
+                ]
             ])
             ->add('label', TextType::class, [
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ label.")
+                ]
             ])
             ->add('genre', TextType::class, [
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ genre.")
+                ]
             ])
             ->add('price', NumberType::class, [
                 'label' => 'Prix',
-                'required' => true
+                'required' => true,
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ prix.")
+                ]
             ])
             ->add('artist', EntityType::class, [
                 'label' => 'Artiste',
                 'class' => Artist::class,
                 'choice_label' => 'name',
+                'constraints' => [
+                    new NotNull([], "Veuillez remplir le champ label.")
+                ]
             ])
         ;
     }

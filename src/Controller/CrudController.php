@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Disc;
-use App\Form\EditFormType;
+use App\Form\DiscFormType;
 use App\Repository\DiscRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +35,7 @@ final class CrudController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_delete', methods: ['POST'])]
     public function delete(Request $request, Disc $disc, EntityManagerInterface $em ): Response
     {
         if ($this->isCsrfTokenValid('delete'.$disc->getId(), $request->getPayload()->getString('_token'))) {
@@ -49,7 +49,7 @@ final class CrudController extends AbstractController
     #[Route('/modify/{id}', name: 'app_modify')]
     public function modify(Disc $disc, EntityManagerInterface $em, Request $request): Response
     {
-        $form = $this->createForm(EditFormType::class, $disc);
+        $form = $this->createForm(DiscFormType::class, $disc);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
@@ -71,6 +71,36 @@ final class CrudController extends AbstractController
         return $this->render('crud/modify.html.twig', [
             'form' => $form,
             'disc' => $disc,
+        ]);
+    }
+
+    #[Route('/add', name: 'app_add')]
+    public function add(EntityManagerInterface $em, Request $request): Response
+    {
+        $newDisc= new Disc();
+        $form = $this->createForm(DiscFormType::class, $newDisc);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            $uploadedDirectory= $this->getParameter('kernel.project_dir').'/assets/uploads/jaquettes/';
+            $uploadedPoster= $form->get('picture')->getData();
+
+            if ($uploadedPoster) {
+                $nameFile= str_replace(' ', '', ($newDisc->getTitle())). '.' . ($uploadedPoster->guessExtension());
+                $uploadedPoster->move($uploadedDirectory, $nameFile);
+                $newDisc->setPicture($nameFile);
+            }
+
+            $em->persist($newDisc);
+            $em->flush();
+
+            return $this->redirectToRoute('app_accueil');
+        }
+
+        return $this->render('crud/add.html.twig', [
+            'form' => $form,
+            'disc' => $newDisc,
         ]);
     }
 }

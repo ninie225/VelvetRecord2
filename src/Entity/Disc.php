@@ -15,14 +15,13 @@ class Disc
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $picture = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: false)]
     #[Assert\Range(
         min: 1895,
         max: 2025,
@@ -30,16 +29,13 @@ class Disc
     )]
     private ?int $year = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $label = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank()]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $genre = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank()]
+    #[ORM\Column(nullable: false)]
     private ?float $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'discs')]
@@ -55,7 +51,7 @@ class Disc
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -79,7 +75,7 @@ class Disc
         return $this->year;
     }
 
-    public function setYear(int $year): static
+    public function setYear(?int $year): static
     {
         $this->year = $year;
 
@@ -91,7 +87,7 @@ class Disc
         return $this->label;
     }
 
-    public function setLabel(string $label): static
+    public function setLabel(?string $label): static
     {
         $this->label = $label;
 
@@ -103,7 +99,7 @@ class Disc
         return $this->genre;
     }
 
-    public function setGenre(string $genre): static
+    public function setGenre(?string $genre): static
     {
         $this->genre = $genre;
 
@@ -115,7 +111,7 @@ class Disc
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(?float $price): static
     {
         $this->price = $price;
 

@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row my-3">
             <h1 class="fw-bold col-10">Liste des disques ({{ nbDiscs }})</h1>
-            <a href="#" class="btn btn-primary col-2">Ajouter</a>
+            <a href="{{ path('app_add') }}" class="btn btn-primary col-2">Ajouter</a>
         </div>
         <div class="row">
             {% for disque in disques %}

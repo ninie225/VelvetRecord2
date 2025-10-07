@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+{% block title %}Formulaire d'ajout{% endblock %} 
+{% block body %}
+<div class="container p-0 mt-5">
+
+    <h1 class="mb-4">Formulaire d'ajout</h1>
+
+    {{ form_start(form) }}
+
+        <div class="mb-3">
+            {{ form_row(form.title) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.year) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.label) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.genre) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.price) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.artist) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_row(form.picture) }}
+            <div class="mb-3">
+                <img 
+                    id="preview-image"
+                    src="{{ form.vars.data.picture ? asset('uploads/jaquettes/' ~ form.vars.data.picture) : '' }}" 
+                    alt="Aperçu"
+                    class="img-thumbnail mb-2"
+                    style="max-width: 200px; display: {{ form.vars.data.picture ? 'block' : 'none' }};">
+            </div>
+        </div>
+
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+
+        </div>
+        <a href="{{ path('app_accueil') }}" class="btn btn-primary">Retour</a>
+</div>
+
+<script>
+    const fileInput = document.getElementById("{{ form.picture.vars.id }}");
+    const preview = document.getElementById("preview-image");
+
+    fileInput.addEventListener("change", function(event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";             
+            }
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = "none";
+        }
+    });
+</script>
+{% endblock %}
