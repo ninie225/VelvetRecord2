@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container p-0 mt-5">
 
-    <h1 class="mb-4">Formulaire d'ajout</h1>
+    <h1 class="my-5 fw-bold text-center">Formulaire d'ajout</h1>
 
     {{ form_start(form) }}
 
@@ -47,9 +47,7 @@
         <div class="d-flex gap-2">
             <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
     {{ form_end(form) }}
-
         </div>
-        <a href="{{ path('app_accueil') }}" class="btn btn-primary">Retour</a>
 </div>
 
 <script>
