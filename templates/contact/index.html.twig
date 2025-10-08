@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+{% block title %}Formulaire de contact{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        min-height: 100vh;
+        margin: 0;
+        background: #000000;
+        background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(79, 61, 115, 1) 50%,
+            rgba(0, 0, 0, 1) 100%
+        );
+        color: #fff;
+    }
+
+    .navbar {
+        background-color: rgba(0, 0, 0, 0) !important;
+        backdrop-filter: blur(5px);
+    }
+
+    .form-control {
+        background-color: transparent !important;
+        border: none;
+        border-bottom: 1px solid #fff;
+        border-radius: 0;
+        color: #fff !important;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+        opacity: 1;
+    }
+
+    .contact-form {
+        padding: 2rem;
+    }
+
+    .form-control:focus {
+        box-shadow: none;                          
+        outline: none;                            
+    }
+
+
+</style>
+
+<div class="container my-4">
+    <h1 class="mt-5 mb-4 fw-bold text-center">Formulaire de contact</h1>
+    <h5 class="mb-5 text-center">Une question ? Contactez-nous !</h5>
+
+    <div class="row align-items-center">
+
+        <!-- Colonne gauche -->
+        <div class="col-md-6 mb-4 mb-md-0">
+            <p><strong>Email :</strong> velvetrecord@gmail.com</p>
+            <p><strong>Adresse :</strong> 40 rue de la musique<br>Amiens, 80000 France</p>
+        </div>
+
+        <!--Colonne droite avec le formulaire -->
+        <div class="col-md-6">
+            <div class="contact-form p-4 rounded-4 border border-light bg-transparent">
+            {{ form_start(form) }}
+                {% for field in form %}
+                    {{ form_widget(field, {
+                        'label': false,
+                        'attr': {
+                            'placeholder': field.vars.label,
+                            'class': 'form-control mb-3'
+                        }
+                    }) }}
+                {% endfor %}
+                <button class="btn btn-light mt-3" type="submit">Envoyer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
