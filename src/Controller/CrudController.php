@@ -103,4 +103,18 @@ final class CrudController extends AbstractController
             'disc' => $newDisc,
         ]);
     }
+    #[Route('/search', name: 'app_search')]
+    public function search(Request $request, DiscRepository $repo): Response
+    {
+        $query = $request->query->get('query');
+        $disques = $query ? $repo->findByTitleOrArtist($query) : [];
+        $nbDisques = count($disques);
+
+        return $this->render('crud/search.html.twig', [
+            'disques' => $disques,
+            'query' => $query,
+            'nbDisques' => $nbDisques,
+        ]);
+    }
+
 }

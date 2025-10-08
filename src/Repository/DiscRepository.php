@@ -16,6 +16,18 @@ class DiscRepository extends ServiceEntityRepository
         parent::__construct($registry, Disc::class);
     }
 
+    public function findByTitleOrArtist(string $name): array
+    {
+        return $this->createQueryBuilder('d')
+            ->leftJoin('d.artist', 'a')            
+            ->where('d.title LIKE :name')
+            ->orWhere('a.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return Disc[] Returns an array of Disc objects
     //     */
