@@ -1,59 +1,50 @@
 {% extends 'base.html.twig' %}
-{% block title %}Formulaire de modification{% endblock %} 
+{% block title %}Formulaire de modification{% endblock %}
+
 {% block body %}
-<div class="container p-0 mt-5">
+<div class="container mt-5">
+    <h1 class="my-5 fw-bold text-center">Formulaire de modification</h1>
 
-    <h1 class="mb-4">Formulaire de modification</h1>
-
-    {{ form_start(form) }}
-
-        <div class="mb-3">
-            {{ form_row(form.title) }}
+    <div class="row justify-content-center align-items-center">
+        <!-- Partie gauche : Image -->
+        <div class="col-md-6 text-center">
+            <img 
+                id="preview-image"
+                src="{{ form.vars.data.picture ? asset('uploads/jaquettes/' ~ form.vars.data.picture) : asset('uploads/logo/pochette.png') }}" 
+                alt="Aperçu"
+                class="bg-transparent border-0 img-thumbnail">
         </div>
 
-        <div class="mb-3">
-            {{ form_row(form.year) }}
-        </div>
+        <!-- Partie droite : Formulaire -->
+        <div class="col-md-6">
+            <div class="contact-form p-4 rounded-4 border border-light bg-transparent">
+                {{ form_start(form) }}
+                    {% for field in form %}
+                        {{ form_widget(field, {
+                            'label': false,
+                            'attr': {
+                                'placeholder': field.vars.label,
+                                'class': 'form-control mb-3'
+                            }
+                        }) }}
+                    {% endfor %}
 
-        <div class="mb-3">
-            {{ form_row(form.label) }}
-        </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-light mt-3" type="submit">
+                            {{ button_label|default('Enregistrer') }}
+                        </button>
 
-        <div class="mb-3">
-            {{ form_row(form.genre) }}
-        </div>
+                        <form method="post" action="{{ path('app_delete', {'id': form.vars.data.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce disque ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ form.vars.data.id) }}">
+                            <button class="btn btn-outline-danger mt-3">Supprimer</button>
+                        </form>
+                    </div>
 
-        <div class="mb-3">
-            {{ form_row(form.price) }}
+                    <a href="{{ path('app_accueil') }}" class="btn btn-primary mt-3">Retour</a>
+                {{ form_end(form) }}
+            </div>
         </div>
-
-        <div class="mb-3">
-            {{ form_row(form.artist) }}
-        </div>
-
-        <div class="mb-3">
-            {{ form_row(form.picture) }}
-            {% if form.vars.data.picture is not empty %}
-                <div class="mb-3">
-                    <img src="{{ asset('uploads/jaquettes/' ~ form.vars.data.picture) }}" 
-                        alt="Poster" 
-                        class="img-thumbnail mb-2"
-                        id="preview-image" 
-                        style="max-width: 200px;">
-                </div>
-            {% endif %}
-        </div>
-
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
-    {{ form_end(form) }}
-
-            <form method="post" action="{{ path('app_delete', {'id': form.vars.data.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce disque');">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ form.vars.data.id) }}">
-                <button class="btn btn-outline-danger">Supprimer</button>
-            </form>
-        </div>
-        <a href="{{ path('app_accueil') }}" class="btn btn-primary">Retour</a>
+    </div>
 </div>
 
 <script>
@@ -71,7 +62,7 @@
             }
             reader.readAsDataURL(file);
         } else {
-            preview.style.display = "none";
+            preview.src = "{{ asset('uploads/logo/pochette.png') }}";
         }
     });
 </script>

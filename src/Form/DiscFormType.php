@@ -29,17 +29,15 @@ class DiscFormType extends AbstractType
             ])
             ->add('picture', FileType::class, [
                 'label' => 'Photo',
-                'required' => false,
                 'mapped' => false,
-                'multiple' =>false,
+                'required' => true,
                 'constraints' => [
+                    new NotNull([
+                        'message' => 'Veuillez uploader une image.'
+                    ]),
                     new File([
                         'maxSize' => '5M',
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/png',
-                            'image/webp'
-                        ],
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
                         'mimeTypesMessage' => 'Veuillez uploader une image valide (JPEG, PNG ou WEBP)',
                     ])
                 ]
@@ -52,12 +50,14 @@ class DiscFormType extends AbstractType
                 ]
             ])
             ->add('label', TextType::class, [
+                'label' => 'Label',
                 'required' => true,
                 'constraints' => [
                     new NotNull([], "Veuillez remplir le champ label.")
                 ]
             ])
             ->add('genre', TextType::class, [
+                'label' => 'Genre',
                 'required' => true,
                 'constraints' => [
                     new NotNull([], "Veuillez remplir le champ genre.")

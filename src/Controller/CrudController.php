@@ -54,15 +54,19 @@ final class CrudController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()){
 
-            $uploadedDirectory= $this->getParameter('kernel.project_dir').'/assets/uploads/jaquettes/';
             $uploadedFile = $form->get('picture')->getData();
+
             if ($uploadedFile){
+
+                $uploadedDirectory= $this->getParameter('kernel.project_dir').'/assets/uploads/jaquettes/';
+
                 $nameFile= str_replace(' ', '', ($disc->getTitle())). '.' . ($uploadedFile->guessExtension());
+
                 $uploadedFile->move($uploadedDirectory, $nameFile);
+
                 $disc->setPicture($nameFile);
             }
             
-            $em->persist($disc);
             $em->flush();
 
             return $this->redirectToRoute('app_accueil', [], Response::HTTP_SEE_OTHER);

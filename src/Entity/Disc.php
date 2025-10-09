@@ -18,7 +18,7 @@ class Disc
     #[ORM\Column(length: 255, nullable: false)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $picture = null;
 
     #[ORM\Column(nullable: false)]

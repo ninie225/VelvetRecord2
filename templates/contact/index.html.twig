@@ -54,27 +54,29 @@
 
         <!-- Colonne gauche -->
         <div class="col-md-6 mb-4 mb-md-0">
-            <p><strong>Email :</strong> velvetrecord@gmail.com</p>
-            <p><strong>Adresse :</strong> 40 rue de la musique<br>Amiens, 80000 France</p>
+            <p class="mb-0"><strong>Email :</strong></p>
+            <p class="mb-4"> velvetrecord@gmail.com</p>
+            <p class="mb-0"><strong>Adresse :</strong></p>
+            <p> 40 rue de la musique<br>Amiens, 80000 France</p>
         </div>
 
         <!--Colonne droite avec le formulaire -->
         <div class="col-md-6">
             <div class="contact-form p-4 rounded-4 border border-light bg-transparent">
-            {{ form_start(form) }}
-                {% for field in form %}
-                    {{ form_widget(field, {
-                        'label': false,
-                        'attr': {
-                            'placeholder': field.vars.label,
-                            'class': 'form-control mb-3'
-                        }
-                    }) }}
-                {% endfor %}
-                <button class="btn btn-light mt-3" type="submit">Envoyer</button>
-            {{ form_end(form) }}
+                {{ form_start(form) }}
+                    {% for field in form %}
+                        {{ form_widget(field, {
+                            'label': false,
+                            'attr': {
+                                'placeholder': field.vars.label,
+                                'class': 'form-control mb-3'
+                            }
+                        }) }}
+                    {% endfor %}
+                    <button class="btn btn-light mt-3" type="submit">Envoyer</button>
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
-
 </div>
 {% endblock %}

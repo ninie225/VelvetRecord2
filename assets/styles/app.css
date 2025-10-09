@@ -1,4 +1,6 @@
 body {
+    background: #000000;
+    background: linear-gradient(102deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(79, 61, 115, 1) 100%);
     color: white;
     font-family: 'Alan Sans', sans-serif;
 }
